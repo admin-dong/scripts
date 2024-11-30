@@ -1,0 +1,19 @@
+网设备下载docker
+配置docker镜像源 
+sudo mkdir -p /etc/docker
+sudo tee /etc/docker/daemon.json <<-'EOF'
+{
+  "registry-mirrors":
+}
+EOF
+sudo systemctl daemon-reload
+sudo systemctl restart docker
+
+
+docker run -p 33060:3306 --name mysql-container -e MYSQL_ROOT_PASSWORD=123456 -d mysql:latest
+指定端口为33060  账号root  密码为 123456
+
+
+本地nv远程上去报错1251  原因mysql8.0更改的了加密方式
+ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY '123456';  ### 123456 mysql的登录密码
+flush privileges;  #刷新权限
